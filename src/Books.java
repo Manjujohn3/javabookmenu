@@ -116,6 +116,25 @@ public class Books {
 
                 case 5:
                     System.out.println("update book selected");
+                    System.out.println("enter the name:");
+                    name = scanner.next();
+                    System.out.println("enter the category to be updated:");
+                    category = scanner.next();
+                    System.out.println("enter the author to be updated:");
+                    author = scanner.next();
+                    System.out.println("enter the charge to be updated:");
+                    charge = scanner.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "UPDATE `books` SET `name`='"+name+"',`category`='"+category+"',`author`='"+author+"',`charge`='"+String.valueOf(charge)+"' WHERE `name`='"+name+"'";
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Updated successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 6:
                     System.out.println("Exit");
