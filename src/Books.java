@@ -99,7 +99,21 @@ public class Books {
 
                 case 4:
                     System.out.println("delete book selected");
+                    System.out.println("Enter the name : ");
+                    name = scanner.next();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
+                        String sql = "DELETE FROM `books` WHERE `name`= '"+name+"'";
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("data deleted successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
+
                 case 5:
                     System.out.println("update book selected");
                     break;
