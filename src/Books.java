@@ -73,7 +73,30 @@ public class Books {
 
                 case 3:
                     System.out.println("search book selected");
+                    System.out.println("Enter the category : ");
+                    category = scanner.next();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb","root","");
+                        String sql = "SELECT `name`, `category`, `author`, `charge` FROM `books` WHERE`category`='"+category+"'";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getName = rs.getString("name");
+                            String getCategory = rs.getString("category");
+                            String getAuthor = rs.getString("author");
+                            String getCharge = rs.getString("charge");
+                            System.out.println("name="+getName);
+                            System.out.println("category="+getCategory);
+                            System.out.println("author="+getAuthor);
+                            System.out.println("charge="+getCharge+"\n");
+                        }
+                    }
+                    catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
+
                 case 4:
                     System.out.println("delete book selected");
                     break;
