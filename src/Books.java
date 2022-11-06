@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class Books {
@@ -22,6 +25,29 @@ public class Books {
             switch (choice) {
                 case 1:
                     System.out.println("insert book selected");
+                    System.out.println("enter the name:");
+                    String name = scanner.next();
+                    System.out.println("enter the category:");
+                    String category = scanner.next();
+                    System.out.println("enter the author:");
+                    String author = scanner.next();
+                    System.out.println("enter the charge:");
+                    int charge = scanner.nextInt();
+
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+                        String sql = "INSERT INTO `books`(`name`, `category`, `author`, `charge`) VALUES (?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setString(1, name);
+                        stmt.setString(2, category);
+                        stmt.setString(3, author);
+                        stmt.setInt(4, charge);
+                        stmt.executeUpdate();
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+
                     break;
                 case 2:
                     System.out.println("view book selected");
